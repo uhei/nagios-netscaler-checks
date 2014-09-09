@@ -1,0 +1,7 @@
+Simple Python scripts to monitor some Citrix Netscaler values.
+
+The scripts are using the nsnitro package (s. https://github.com/favoretti/nsnitro) or the nitro-python SDK (provided by Citrix since 10.5 (s. /var/netscaler/nitro/nitro-python.tgz on your Netscaler))
+
+When you're running a HA pair it makes sense to use a SNIP to monitor the connections and the vservers.
+
+Regarding SSL: It looks like the Nitro SDK uses certifi (s. https://github.com/certifi/python-certifi) to verify CA certificates. To add your internal CA cert edit the certifi CA file (e.g. /usr/local/lib/python2.7/dist-packages/certifi-14.05.14-py2.7.egg/certifi/cacert.pem). Contrary to the Citrix SDK documentation you can't disable the certificate/hostname verification (with current release 10.5 51.10).
