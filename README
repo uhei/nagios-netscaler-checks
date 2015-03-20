@@ -4,4 +4,4 @@ The scripts are using the nsnitro package (s. https://github.com/favoretti/nsnit
 
 When you're running a HA pair it makes sense to use a SNIP to monitor the connections and the vservers.
 
-Regarding SSL: It looks like the Nitro SDK uses certifi (s. https://github.com/certifi/python-certifi) to verify CA certificates. To add your internal CA cert edit the certifi CA file (e.g. /usr/local/lib/python2.7/dist-packages/certifi-14.05.14-py2.7.egg/certifi/cacert.pem). Contrary to the Citrix SDK documentation you can't disable the certificate/hostname verification (with current release 10.5 51.10).
+Regarding SSL: It looks like the Nitro SDK uses certifi (s. https://github.com/certifi/python-certifi) to verify CA certificates. To add your internal CA cert edit the certifi CA file (e.g. /usr/local/lib/python2.7/dist-packages/certifi-14.05.14-py2.7.egg/certifi/cacert.pem). Depending on the installed python modules it is also possible that /etc/ssl/certs/ca-certificates.crt is used to verify the certificate. Contrary to the Citrix SDK documentation you can't disable the certificate/hostname verification (tested with release 10.5 51.10).
