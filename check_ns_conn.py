@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import sys
 import time
 from nssrc.com.citrix.netscaler.nitro.exception.nitro_exception import nitro_exception
