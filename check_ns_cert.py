@@ -9,7 +9,7 @@ critical=False
 warning=False
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Check Netscaler vserver status')
+	parser = argparse.ArgumentParser(description='Check Netscaler CertKey status')
 	parser.add_argument('--host', metavar='HOSTNAME', required=True, help='Netscaler hostname')
 	parser.add_argument('--user', metavar='USERNAME', default='nagios', help='Netscaler username')
 	parser.add_argument('--password', metavar='PASSWORD', default='api_user', help='Netscaler password')
@@ -17,6 +17,7 @@ if __name__ == "__main__":
         parser.add_argument('-w', '--warning', metavar='WARNING', required=True, help='warning level for remaining days to expire')
         parser.add_argument('-c', '--critical', metavar='CRITICAL', required=True, help='critical level for remaining days to expire')
 	parser.add_argument('--dargs', action='store_true', help='show args')
+	parser.add_argument('--ignore', nargs='*', metavar='CERTKEYNAME', help='ignore certs')
 	
 	args = parser.parse_args()
 	if args.dargs:
@@ -30,6 +31,8 @@ if __name__ == "__main__":
 
 		certkeys = NSSSLCertKey().get_all(nitro)
 		for certkey in sorted(certkeys, key=lambda k: k.get_certkey()):
+                    if ( args.ignore and certkey.get_certkey() in args.ignore ):
+                        continue
                     if ( int(certkey.get_daystoexpiration()) <= int(args.critical) ):
                             outputstring +=  certkey.get_certkey() + " expires in " + str(certkey.get_daystoexpiration()) + " Days "
                             critical = True
