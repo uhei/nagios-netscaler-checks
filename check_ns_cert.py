@@ -14,11 +14,11 @@ if __name__ == "__main__":
 	parser.add_argument('--user', metavar='USERNAME', default='nagios', help='Netscaler username')
 	parser.add_argument('--password', metavar='PASSWORD', default='api_user', help='Netscaler password')
 	parser.add_argument('--ssl', action="store_true", help='turn ssl on')
-        parser.add_argument('-w', '--warning', metavar='WARNING', required=True, help='warning level for remaining days to expire')
-        parser.add_argument('-c', '--critical', metavar='CRITICAL', required=True, help='critical level for remaining days to expire')
+	parser.add_argument('-w', '--warning', metavar='WARNING', required=True, help='warning level for remaining days to expire')
+	parser.add_argument('-c', '--critical', metavar='CRITICAL', required=True, help='critical level for remaining days to expire')
 	parser.add_argument('--dargs', action='store_true', help='show args')
 	parser.add_argument('--ignore', nargs='*', metavar='CERTKEYNAME', help='ignore certs')
-	
+
 	args = parser.parse_args()
 	if args.dargs:
 		print(args)

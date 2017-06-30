@@ -19,11 +19,12 @@ if __name__ == "__main__":
 	parser.add_argument('--user', metavar='USERNAME', default='nagios', help='Netscaler username')
 	parser.add_argument('--password', metavar='PASSWORD', default='api_user', help='Netscaler password')
 	parser.add_argument('--ssl', action="store_true", help='turn ssl on')
+	parser.add_argument('--nosslverify', action="store_true", help='turn ssl verify off')
 	parser.add_argument('-w', '--warning', metavar='WARNING', help='warning')
 	parser.add_argument('-c', '--critical', metavar='CRITICAL', help='critcal')
 
 	parser.add_argument('--dargs', action='store_true', help='show service')
-	
+
 	args = parser.parse_args()
 	if args.dargs:
 		print(args)
@@ -32,8 +33,9 @@ if __name__ == "__main__":
 #	nitro = NSNitro(args.host, args.user, args.password, args.ssl)
 	if args.ssl:
 		nitro_session = nitro_service(args.host, "HTTPS")
-		nitro_session.certvalidation = False
-		nitro_session.hostnameverification = False
+		if args.nosslverify:
+			nitro_session.certvalidation = False
+			nitro_session.hostnameverification = False
 	else:
 		nitro_session = nitro_service(args.host, "HTTP")
 
@@ -42,9 +44,9 @@ if __name__ == "__main__":
 
 	try:
 		nitro_session.login()
-                try :
-                        obj = ns_stats.get(nitro_session)
-                        for i in range(len(obj)) :
+		try :
+			obj = ns_stats.get(nitro_session)
+			for i in range(len(obj)) :
 				if  args.warning and args.critical:
 					if ( float(obj[i].disk0perusage) >= float(args.critical) ) or ( float(obj[i].disk1perusage) >= float(args.critical) ):
 						print("CRITICAL: /flash " + str(obj[i].disk0perusage) + "%, /var " + str(obj[i].disk1perusage) + "% | 'flash'=" + str(obj[i].disk0perusage) + "%;" + args.warning + ";" + args.critical + ";; 'var'=" + str(obj[i].disk1perusage) + "%;" + args.warning + ";" + args.critical + ";;")
@@ -63,10 +65,10 @@ if __name__ == "__main__":
 					nitro_session.logout()
 					sys.exit(0)
 				
-                except nitro_exception as e :
-                        print("Exception::statsystem::errorcode="+str(e.errorcode)+",message="+ e.message)
-                except Exception as e :
-                        print("Exception::statsystem::message="+str(e.args))
+		except nitro_exception as e :
+			print("Exception::statsystem::errorcode="+str(e.errorcode)+",message="+ e.message)
+		except Exception as e :
+			print("Exception::statsystem::message="+str(e.args))
 	except nitro_exception as e :
 		print("Exception::statsystem::errorcode="+str(e.errorcode)+",message="+ e.message)
 	except Exception as e :
