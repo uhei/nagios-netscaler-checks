@@ -1,6 +1,6 @@
-Simple Python scripts to monitor some Citrix Netscaler values.
+Simple Python scripts to monitor some Citrix Netscaler and Netscaler MAS values.
 
-The scripts are using the nsnitro package (s. https://github.com/favoretti/nsnitro) or the nitro-python SDK (provided by Citrix since 10.5 (s. /var/netscaler/nitro/nitro-python.tgz on your Netscaler))
+The scripts are using the nsnitro package (s. https://github.com/favoretti/nsnitro) or the nitro-python SDKs (provided by Citrix since 10.5 (s. /var/netscaler/nitro/nitro-python.tgz on your Netscaler or the Downloads section on the WebUI)
 
 When you're running a HA pair it makes sense to use a SNIP to monitor the connections and the vservers.
 
